@@ -1,4 +1,5 @@
 from weapon import Weapon
+from spell import Spell
 
 
 class Hero:
@@ -10,7 +11,9 @@ class Hero:
         self.mana = mana
         self.max_mana = mana
         self.mana_regeneration_rate = mana_regeneration_rate
+        self.mana_cost = 0
         self.damage_by_weapon = 0
+        self.damage_by_spell = 0
 
     def known_as(self):
         return "{} the {}".format(self.name, self.title)
@@ -25,7 +28,10 @@ class Hero:
         return self.get_health() > 0
 
     def can_cast(self):
-        return self.get_mana() > 0
+        if self.damage_by_spell == 0 or self.mana_cost > self.mana:
+            return False
+        else:
+            return True
 
     def take_damage(self, damage_points):
         self.health -= damage_points
@@ -52,6 +58,14 @@ class Hero:
             self.damage_by_weapon = weapon.get_damage()
 
     def learn(self, spell):
-        pass
+        self.damage_by_spell = spell.get_damage()
+        self.mana_cost = spell.get_mana_cost()
 
+    def attack(self, by):
+        if self.damage_by_weapon == 0 and self.damage_by_spell == 0:
+            return 0
+        if by is "damage":
+            return self.damage_by_weapon
+        if by is "spell":
+            return self.damage_by_spell
 
