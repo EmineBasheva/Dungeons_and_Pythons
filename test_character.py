@@ -9,6 +9,14 @@ class TestCharacter(unittest.TestCase):
     def setUp(self):
         self.char = Character(health=100, mana=100)
 
+    def test_health_with_negative(self):
+        with self.assertRaises(ValueError):
+            char2 = Character(health=-100, mana=100)
+
+    def test_mana_negative(self):
+        with self.assertRaises(ValueError):
+            char2 = Character(health=100, mana=-100)
+    
     def test_is_alive_with_100(self):
         self.assertTrue(self.char.is_alive())
 
@@ -16,34 +24,18 @@ class TestCharacter(unittest.TestCase):
         char2 = Character(health=0.5, mana=100)
         self.assertTrue(char2.is_alive())
 
-    def test_is_alive_with_negative(self):
-        char2 = Character(health=-100, mana=100)
-        self.assertFalse(char2.is_alive())
-
     def test_can_cast_True(self):
         self.assertTrue(self.char.can_cast())
 
     def test_can_cast_False(self):
-        char2 = Character(health=100, mana=-100)
-        self.assertFalse(char2.can_cast())
-
-    def test_can_cast_not_alive(self):
-        char2 = Character(health=-100, mana=100)
+        char2 = Character(health=100, mana=0)
         self.assertFalse(char2.can_cast())
 
     def test_get_health_100(self):
         self.assertEqual(self.char.get_health(), 100)
 
-    def test_get_health_negative(self):
-        char2 = Character(health=-100, mana=100)
-        self.assertEqual(char2.get_health(), 0)
-
     def test_get_mana_100(self):
         self.assertEqual(self.char.get_mana(), 100)
-
-    def test_get_mana_negative(self):
-        char2 = Character(health=100, mana=-100)
-        self.assertEqual(char2.get_mana(), 0)
 
     def test_take_healing_with_True(self):
         char2 = Character(health=100, mana=100)

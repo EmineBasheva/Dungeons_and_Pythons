@@ -5,10 +5,14 @@ from spell import Spell
 class Character:
 
     def __init__(self, health, mana):
-        self.__max_health = max(health, 0)
-        self._health = max(health, 0)
-        self.__max_mana = max(mana, 0)
-        self._mana = max(mana, 0)
+        if health < 0:
+            raise ValueError
+        self.__max_health = health
+        self._health = health
+        if mana < 0:
+            raise ValueError
+        self.__max_mana = mana
+        self._mana = mana
         self.damage_by_weapon = 0
         self.mana_cost = 0
         self.damage_by_spell = 0
