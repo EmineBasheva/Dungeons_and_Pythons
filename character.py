@@ -31,6 +31,9 @@ class Character:
     def get_mana(self):
         return self._mana
 
+    def take_mana(self, mana_points):
+        pass
+
     def take_healing(self, healing_points):
         if not self.is_alive():
             return False

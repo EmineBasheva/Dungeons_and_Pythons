@@ -15,7 +15,7 @@ class TestEnemy(unittest.TestCase):
     def test_take_damage(self):
         enemy2 = Enemy(health=100, mana=100, damage=20)
         enemy2.take_damage(30)
-        self.assertEqual(enemy2._health, 70)
+        self.assertEqual(enemy2.get_health(), 70)
 
     def test_attack_with_weapon(self):
         w = Weapon('Axe', 30)
