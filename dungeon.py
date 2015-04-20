@@ -31,17 +31,14 @@ class Dungeon:
         self.enemy_points = [[i, j] for i, line in enumerate(self.map)
                              for j, ch in enumerate(line) if ch == "E"]
 
+        self.obstacle_points = [[i, j] for i, line in enumerate(self.map)
+                                for j, ch in enumerate(line) if ch == "#"]
+
         self.curr_pos = [None, None]
 
     def print_map(self):
         for line in self.map:
             print(''.join(line))
-
-    def find_spawn_points(self):
-        for i, line in enumerate(self.map):
-            for j, ch in enumerate(line):
-                if ch == "S":
-                    self.spawn_points.append([i, j])
 
     def spawn(self):
         if self.spawn_points is not list():
@@ -60,6 +57,13 @@ class Dungeon:
         return True
 
     def swap_curr_point_with(self, point):
+        if point in self.obstacle_points:
+            return False
+#NEED TO FINISH THIS SHIT!
+        if point in self.treasure_points:
+            self.map[self.curr_pos[0]][self.curr_pos[1]] = "."
+            self.map[point[0]][point[1]] = "H"
+            self.curr_pos[0], self.curr_pos[1] = point[0], point[1]
         if self.point_in_dungeon(point):
             self.map[self.curr_pos[0]][self.curr_pos[1]], self.map[point[0]][point[1]] = self.map[point[0]][point[1]], self.map[self.curr_pos[0]][self.curr_pos[1]]
             self.curr_pos[0], self.curr_pos[1] = point[0], point[1]
@@ -89,5 +93,8 @@ class Dungeon:
 dungeon = Dungeon("level1.txt")
 dungeon.print_map()
 dungeon.spawn()
-print(dungeon.move_hero("left"))
-print([2,5] in dungeon.enemy_points)
+dungeon.print_map()
+dungeon.move_hero("right")
+dungeon.move_hero("down")
+dungeon.print_map()
+print(dungeon.curr_pos)
