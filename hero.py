@@ -64,7 +64,7 @@ class Hero:
     def attack(self, by):
         if self.damage_by_weapon == 0 and self.damage_by_spell == 0:
             return 0
-        if by is "damage":
+        if by is "weapon":
             return self.damage_by_weapon
         if by is "spell":
             return self.damage_by_spell
